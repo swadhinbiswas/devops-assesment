@@ -42,7 +42,9 @@ groups:
       # 5 minutes avoids reacting to a single GC spike.
       - alert: ContainerMemoryNearLimit
         expr: |
-          container_memory_working_set_bytes{name!=""} / container_spec_memory_limit_bytes > 0.9
+          container_memory_working_set_bytes{name!=""}
+          / on(name) (container_spec_memory_limit_bytes{name!=""} > 0)
+          > 0.9
         for: 5m
         labels:
           severity: warning
