@@ -201,10 +201,14 @@ collect_metrics() {
   mounts=()
   disk_pcts=()
   local mnt pct
+  local -a df_cmd=(df -P -x tmpfs -x devtmpfs -x squashfs -x efivarfs -x ramfs -x iso9660)
+  if command -v timeout >/dev/null 2>&1; then
+    df_cmd=(timeout 5 "${df_cmd[@]}")
+  fi
   while read -r mnt pct; do
     mounts+=("$mnt")
     disk_pcts+=("$pct")
-  done < <(df -P -x tmpfs -x devtmpfs -x squashfs -x efivarfs -x ramfs -x iso9660 |
+  done < <("${df_cmd[@]}" |
     awk 'NR > 1 && $6 !~ /^\/(proc|sys|dev|run)/ { printf "%s %s\n", $6, $5 + 0 }')
 
   top_pids=()
