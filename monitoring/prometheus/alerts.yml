@@ -72,7 +72,7 @@ groups:
       - alert: ContainerMemoryNearLimit
         expr: |
           container_memory_working_set_bytes{name!=""}
-          / on(name) (container_spec_memory_limit_bytes{name!=""} > 0)
+          / on(id) (container_spec_memory_limit_bytes{name!=""} > 0)
           > 0.9
         for: 5m
         labels:

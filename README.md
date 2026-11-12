@@ -472,7 +472,7 @@ helm upgrade --install devops-task charts/devops-task \
   -f charts/devops-task/values-staging.yaml --set image.tag=v2.0.0
 ```
 
-[`values-staging.yaml`](charts/devops-task/values-staging.yaml) uses 2 replicas and an HPA from 2 to 5 at 70% CPU. [`values-production.yaml`](charts/devops-task/values-production.yaml) uses 3 replicas, an HPA from 3 to 10 at 60%, larger requests, and the ingress enabled. The chart was installed over the plain manifests in kind; the release reported 2/2 ready and the HPA settled at `cpu: 3%/70%`. That test ran the then-current `v0.1.8` image; the chart now pins `v2.0.0`. The chart defaults `existingSecret` to empty, so a fresh install works with the ConfigMap alone; add `--set existingSecret=devops-task-secret` if you created the app Secret.
+[`values-staging.yaml`](charts/devops-task/values-staging.yaml) uses 2 replicas and an HPA from 2 to 5 at 70% CPU. [`values-production.yaml`](charts/devops-task/values-production.yaml) uses 3 replicas, an HPA from 3 to 10 at 60%, larger requests, and the ingress enabled. The chart was installed over the plain manifests in kind; the release reported 2/2 ready and the HPA settled at `cpu: 3%/70%`. That test ran the then-current `v0.1.8` image; the chart now pins `v2.0.0`. The chart defaults `existingSecret` to empty, so a fresh install works with the ConfigMap alone; add `--set existingSecret=devops-task-secret` if you created the app Secret. If you are upgrading from earlier values that defaulted to `devops-task-secret`, set that value explicitly to keep the existing Secret overrides.
 
 ### Signed images and SBOM
 

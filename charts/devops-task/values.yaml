@@ -16,7 +16,9 @@ config:
   OTEL_EXPORTER_OTLP_ENDPOINT: ""
 
 # Optional existing Secret with sensitive overrides. Empty by default so a
-# fresh install works from the ConfigMap alone; set it when you have one.
+# fresh install works from the ConfigMap alone. Earlier chart values used
+# `devops-task-secret` by default; if you already have that Secret, set
+# `existingSecret: devops-task-secret` explicitly to keep its overrides.
 existingSecret: ""
 
 secret:
