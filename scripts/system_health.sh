@@ -210,6 +210,10 @@ collect_metrics() {
     disk_pcts+=("$pct")
   done < <("${df_cmd[@]}" |
     awk 'NR > 1 && $6 !~ /^\/(proc|sys|dev|run)/ { printf "%s %s\n", $6, $5 + 0 }')
+  if ((${#mounts[@]} == 0)); then
+    printf '[ERROR] df returned no mounted filesystems\n' >&2
+    exit 3
+  fi
 
   top_pids=()
   top_names=()
@@ -222,6 +226,10 @@ collect_metrics() {
     top_pmems+=("$pmem")
     TOP_TEXT+="${name}(${pid}):${pmem}% "
   done < <(ps -eo pmem,pid,comm --no-headers --sort=-pmem | head -n "$TOP_PROCS")
+  if ((${#top_pids[@]} == 0)); then
+    printf '[ERROR] ps returned no processes\n' >&2
+    exit 3
+  fi
 
   TIMESTAMP=$(date -u +%Y-%m-%dT%H:%M:%SZ)
 }
