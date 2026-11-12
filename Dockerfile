@@ -41,6 +41,7 @@ ENV APP_PORT=8080 \
     PYTHONDONTWRITEBYTECODE=1
 
 # Install only the runtime libraries, without exact Alpine package pins.
+# hadolint ignore=DL3018
 RUN apk add --no-cache libstdc++ libgcc \
     && addgroup -g 10001 -S app \
     && adduser -u 10001 -S -G app app \

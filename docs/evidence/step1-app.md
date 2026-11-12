@@ -79,9 +79,10 @@ TOTAL     145      0     20      0   100%
 
 From `Dockerfile`:
 
-- Multi-stage build; both base images are pinned by digest:
-  `python:3.12-alpine@sha256:e064671ca452...` in the builder and
-  `alpine:3.23@sha256:469c9ea410b9...` for the final stage.
+- Multi-stage build; both stages use the same digest-pinned
+  `python:3.12-alpine@sha256:e064671ca452...` base. The previous
+  `alpine:3.23` + exact `python3=3.12.16-r0` pins became unsatisfiable when
+  Alpine moved to Python 3.14 and libstdc++/libgcc 15.2.0-r5.
 - `USER 10001:10001` (non-root), `STOPSIGNAL SIGTERM`, OCI labels for title,
   description, version, revision, created and license.
 - `HEALTHCHECK` calls `/health` with the bundled `python3`, since the shell and
