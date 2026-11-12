@@ -619,6 +619,7 @@ The `BUILDKITE_API_KEY` repository secret was used once to set those provider se
 - IAM: the GitHub Actions deploy role is trusted only for this repo and `main`; the EC2 instance profile is scoped to ECR pull and CloudWatch Logs write. No static access keys anywhere, no SSH key pair on the instance (SSM Session Manager only).
 - Network exposure: the security group opens only 8080, the app binds 127.0.0.1 locally, and in the monitoring stack only Grafana is published (on loopback) while everything else stays on the internal Docker network.
 - Runtime hardening: containers run as UID 10001 with read-only root filesystems, all capabilities dropped, `no-new-privileges`, and resource limits; the Kubernetes `securityContext` mirrors this. cAdvisor and Node Exporter mount host paths read-only only (see the host access table above).
+- Commit signing: local commits and tags are signed with the maintainer's SSH key (`gpg.format=ssh`, `commit.gpgsign=true`, `tag.gpgsign=true`); GitHub verifies authored commits and the signed `v2.0.0` tag.
 
 ## Design decisions
 
