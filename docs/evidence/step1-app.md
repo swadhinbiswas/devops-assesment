@@ -1,5 +1,9 @@
 # Step 1 evidence: application and container
 
+> Captured on 2.0.0. The current patch is 2.0.1; the runtime behavior is
+> unchanged and the patch only fixes the container base/package pins. The
+> 2.0.1 image size is recorded from the patch CI build.
+
 Captured on 2026-11-12 against the current 2.0.0 code. The service ran as a
 local process on `127.0.0.1:8091` with `APP_PORT=8091`, `APP_ENV=staging`,
 `LOG_LEVEL=DEBUG`, and `APP_VERSION=2.0.0`; the container facts below are from
