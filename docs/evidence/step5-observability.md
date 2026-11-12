@@ -1,5 +1,8 @@
 # Observability verification
 
+> Captured on the v0.1.0 build. The current release is v2.0.0; the scrape
+> targets, alert rules, dashboard queries, and log labels are unchanged.
+
 Stack: prometheus, grafana, loki, alloy, node-exporter, cadvisor (+ app) via `docker compose --profile monitoring up -d`.
 
 ## Prometheus targets (all UP)

@@ -18,7 +18,7 @@ uv run pytest --cov=app --cov-report=term-missing --cov-report=xml --cov-fail-un
 echo
 echo "== Dockerfile and shell lint =="
 hadolint Dockerfile
-shellcheck scripts/*.sh
+shellcheck scripts/*.sh monitoring/alertmanager/entrypoint.sh
 
 if [[ "$RUN_DOCKER" -eq 1 ]]; then
   if ! command -v docker >/dev/null 2>&1; then

@@ -63,7 +63,7 @@ variable "log_retention_days" {
 }
 
 variable "deploy_script_ref" {
-  description = "Git ref of scripts/deploy.sh the instance bootstraps from."
+  description = "Git ref of scripts/deploy.sh the instance bootstraps from; pin it to the release tag."
   type        = string
-  default     = "main"
+  default     = "v2.0.0"
 }

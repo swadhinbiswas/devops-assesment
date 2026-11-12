@@ -41,9 +41,10 @@ usage() {
   cat <<'EOF'
 system_health.sh — production host health probe.
 
-Collects CPU, memory, disk usage for all mounted filesystems, load average
-and the top 5 processes by memory, appends a timestamped entry to a log
-file, and exits with a status monitoring tools can act on.
+Collects CPU, memory, disk usage for all real mounted filesystems (pseudo
+filesystems excluded), load average and the top 5 processes by memory,
+appends a timestamped entry to a log file, and exits with a status
+monitoring tools can act on.
 
 Usage:
   system_health.sh [--json] [--log-file PATH]
@@ -179,7 +180,7 @@ collect_metrics() {
     mounts+=("$mnt")
     disk_pcts+=("$pct")
   done < <(df -P -x tmpfs -x devtmpfs -x squashfs -x efivarfs -x ramfs -x iso9660 |
-    awk 'NR > 1 && $6 !~ /^\/(proc|sys|dev|run)/ && $6 != "/boot/efi" && $6 != "/efi" { printf "%s %s\n", $6, $5 + 0 }')
+    awk 'NR > 1 && $6 !~ /^\/(proc|sys|dev|run)/ { printf "%s %s\n", $6, $5 + 0 }')
 
   top_pids=()
   top_names=()
