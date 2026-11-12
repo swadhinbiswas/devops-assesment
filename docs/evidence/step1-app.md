@@ -87,8 +87,9 @@ From `Dockerfile`:
   description, version, revision, created and license.
 - `HEALTHCHECK` calls `/health` with the bundled `python3`, since the shell and
   `apk` are removed from the final image.
-- Final image size: 93 MB (93,367,962 bytes, reported by the CI image build in
-  the `image-scan` job; the tracing dependencies add to the earlier 84 MB build).
+- Final image size: 106 MB (106,004,760 bytes, reported by the 2.0.1
+  `image-scan` job; the Python 3.12 runtime base is larger than the previous
+  Alpine 3.23 + `python3` combination).
 
 `.dockerignore` keeps `.git`, `.venv`, tests, docs, terraform, k8s, monitoring,
 scripts and local env files out of the build context.
