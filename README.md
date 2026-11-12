@@ -615,6 +615,7 @@ The `BUILDKITE_API_KEY` repository secret was used once to set those provider se
 4. Roll back automatically. On any deploy or smoke failure the script redeploys the previous tag (the `--rollback` path) and exits non-zero so the workflow fails visibly. This is the path proven by the bogus-tag run above.
 5. On Kubernetes, `kubectl set image` plus `rollout status`, with `maxUnavailable: 0` so capacity never drops; `kubectl rollout undo` returns to the previous ReplicaSet revision (demonstrated, 900/900).
 6. The service is stateless (no database schema), so image-level rollback is complete and there is no data migration to undo.
+7. The EC2 path is a single-instance swap (`docker rm -f` then `docker run`), so it has a brief restart window; zero-downtime is demonstrated on Kubernetes. A production HA path would use two instances behind an ALB.
 
 ## Security considerations
 
@@ -671,6 +672,9 @@ about $15.2 plus storage and the IPv4 address, call it $21/month. The EKS path w
 - Add `trace_id`/`span_id` to the JSON logs and a Loki derived field to Tempo; tracing is provisioned, but logs and traces are not yet correlated.
 - Add a fault-injection endpoint behind an environment flag and capture a real `HighErrorRate` firing; the rule is validated by `promtool` and `AppInstanceDown` has a firing screenshot, but the error-rate alert has not been fired in this evidence.
 - Refresh and scan the monitoring images with the app image; they are pinned to versions that work with this Docker/kind setup but are not the newest releases.
+- Add TLS/ALB and restrict the EC2 egress path for production; the demo is a single HTTP instance with broad egress for image pulls and SSM.
+- Add CloudWatch alarms for the EC2 host and a snapshot schedule; the current cost table excludes snapshots because Terraform does not create them.
+- Add `org.opencontainers.image.source` and `.url` labels in a future image build; the current OCI labels cover title, description, version, revision, created time, and license.
 - Containerd-native container metrics: this workstation runs Docker 29's containerd snapshotter; cAdvisor 0.54 works, but a containerd-native exporter would age better.
 
 ## AI usage
