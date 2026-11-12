@@ -12,7 +12,7 @@ node-exporter up
 cadvisor up
 ```
 
-## Alert rules loaded (4, evaluated every 15s)
+## Alert rules loaded (4; rule group every 30s, global evaluation 15s)
 ```
 AppInstanceDown inactive
 HighErrorRate inactive
