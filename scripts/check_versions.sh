@@ -30,4 +30,11 @@ check terraform/modules/app-runtime/variables.tf "default     = \"$VERSION\""
 check Makefile "\$\${APP_VERSION:-$VERSION}"
 check .env.example "APP_VERSION=$VERSION"
 
-printf 'version %s is consistent\n' "$VERSION"
+# The Terraform user-data verifies this checksum; keep it in sync.
+deploy_sha="$(sha256sum "$ROOT/scripts/deploy.sh" | awk '{print $1}')"
+if ! grep -Fq -- "$deploy_sha" "$ROOT/terraform/modules/app-runtime/variables.tf"; then
+  printf 'deploy checksum drift: terraform/modules/app-runtime/variables.tf does not contain %s\n' "$deploy_sha" >&2
+  exit 1
+fi
+
+printf 'version %s is consistent; deploy script checksum %s\n' "$VERSION" "$deploy_sha"
