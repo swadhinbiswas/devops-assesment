@@ -14,7 +14,7 @@ RUN uv export --frozen --no-dev --no-emit-project --output-file /tmp/requirement
     && uv pip install --system --prefix=/install -r /tmp/requirements.txt \
     && find /install -name '*.pyi' -delete
 
-FROM alpine:3.23@sha256:469c9ea410b9215eaee7976ba6c0639039b444be8e5d638f7abbada189971eb2
+FROM alpine:3.24@sha256:f59abe656b692d901e184be3445e084786602108599d2a51d229c0f5a48c71bf
 
 ARG APP_VERSION=2.0.0
 ARG VCS_REF=local
