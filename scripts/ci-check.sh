@@ -4,6 +4,8 @@ set -euo pipefail
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$REPO_ROOT"
 
+./scripts/check_versions.sh
+
 RUN_DOCKER=1
 if [[ "${1:-}" == "--no-docker" ]]; then
   RUN_DOCKER=0

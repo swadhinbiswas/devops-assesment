@@ -94,6 +94,7 @@
       ansible.builtin.copy:
         dest: /etc/default/system-health
         mode: "0600"
+        no_log: true
         content: |
           HEALTH_WEBHOOK_URL={{ health_webhook_url }}
 
