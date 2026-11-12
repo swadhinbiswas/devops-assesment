@@ -5,11 +5,11 @@ A small FastAPI service taken through the full assessment: hardened container, C
 [![PR checks](https://github.com/swadhinbiswas/devops-assesment/actions/workflows/pr.yml/badge.svg)](https://github.com/swadhinbiswas/devops-assesment/actions/workflows/pr.yml)
 ![tests](https://img.shields.io/badge/tests-17%20passed-brightgreen)
 ![coverage](https://img.shields.io/badge/coverage-100%25-brightgreen)
-![image size](https://img.shields.io/badge/image-93%20MB-blue)
+![image size](https://img.shields.io/badge/image-106%20MB-blue)
 ![signed](https://img.shields.io/badge/images-cosign%20signed-blueviolet)
 ![license](https://img.shields.io/badge/license-MIT-blue)
 
-All seven task steps are complete on `main`, and every bonus item is implemented. The final image is 93 MB, 17 tests cover 100% of the app code, and the last completed CI runs are green. Every command below was run on my machine; the raw output lives in [`docs/evidence/`](docs/evidence/) and the key excerpts are inline.
+All seven task steps are complete on `main`, and every bonus item is implemented. The final image is 106 MB, 17 tests cover 100% of the app code, and the last completed CI runs are green. Every command below was run on my machine; the raw output lives in [`docs/evidence/`](docs/evidence/) and the key excerpts are inline.
 
 ## Contents
 
@@ -130,7 +130,7 @@ The service reads every setting from the environment, logs one JSON object per l
 {"timestamp":"...","level":"INFO","logger":"uvicorn.error","message":"Application shutdown complete.","environment":"staging","version":"2.0.1"}
 ```
 
-SIGTERM was sent between the request and the shutdown lines; the process exited 143 (128 + 15). The final image is 93 MB and runs as UID 10001 from a digest-pinned Python 3.12 Alpine base with a HEALTHCHECK on `/health` and OCI labels; the Dockerfile and compose hardening are detailed in [step1-app.md](docs/evidence/step1-app.md). When `OTEL_EXPORTER_OTLP_ENDPOINT` is set, the same process also exports OTLP traces; see [Bonus features](#bonus-features).
+SIGTERM was sent between the request and the shutdown lines; the process exited 143 (128 + 15). The final image is 106 MB and runs as UID 10001 from a digest-pinned Python 3.12 Alpine base with a HEALTHCHECK on `/health` and OCI labels; the Dockerfile and compose hardening are detailed in [step1-app.md](docs/evidence/step1-app.md). When `OTEL_EXPORTER_OTLP_ENDPOINT` is set, the same process also exports OTLP traces; see [Bonus features](#bonus-features).
 
 ### 2. Run the observability stack
 
